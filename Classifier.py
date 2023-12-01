@@ -17,6 +17,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from tensorflow.keras.layers import LSTM, Dropout
 import streamlit as st
 from streamlit_lottie import st_lottie
+from sklearn.metrics import classification_report
+
 import requests
 import io
 
@@ -137,6 +139,8 @@ def main():
             svm_predictions = svm_model.predict(X_test)
             st.write("Confusion Matrix:")
             plot_confusion_matrix(y_test_labels, svm_predictions)
+            st.text("Classification Report:")
+            st.text(classification_report(y_test_labels, svm_predictions))
             
             
 
@@ -148,6 +152,9 @@ def main():
             knn_predictions = knn_model.predict(X_test)
             st.write("Confusion Matrix:")
             plot_confusion_matrix(y_test_labels, knn_predictions)
+            st.text("Classification Report:")
+            st.text(classification_report(y_test_labels, knn_predictions))
+
             
         with col3:
             st.subheader("LSTM")
@@ -158,6 +165,8 @@ def main():
             lstm_predictions = lstm_model.predict(X_test_reshaped).argmax(axis=1)
             st.write("Confusion Matrix:")
             plot_confusion_matrix(y_test.idxmax(axis=1), lstm_predictions)
+            st.text("Classification Report:")
+            st.text(classification_report(y_test.idxmax(axis=1), lstm_predictions))
 
     # Additional Graphs
     st.header("Additional Insights")
@@ -212,5 +221,7 @@ def main():
 
     # Theme and layout adjustments
    
+
+
 if __name__ == "__main__":
     main()
